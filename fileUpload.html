@@ -1,0 +1,41 @@
+<template>
+    <div class="slds-text-body_regular">
+        <lightning-input type="file"
+                         label="Upload CSV file"
+                         accept=".csv"
+                         onchange={handleFileChange}>
+        </lightning-input>
+        
+        <!-- Spinner during processing -->
+        <template if:true={isProcessing}>
+            <div class="slds-spinner_container slds-m-top_medium">
+                <lightning-spinner alternative-text="Processing file..." size="large"></lightning-spinner>
+                <p class="slds-text-body_small slds-m-top_small">Processing file...</p>
+            </div>
+        </template>
+        
+        <!-- Display uploaded data rows -->
+        <template if:true={hasDataRows}>
+            <div class="slds-m-top_medium">
+                <h2 class="slds-text-heading_small">Uploaded Data</h2>
+                <lightning-datatable key-field="id"
+                                     data={dataRows}
+                                     columns={dataColumns}
+                                     hide-checkbox-column>
+                </lightning-datatable>
+            </div>
+        </template>
+        
+        <!-- Display errors -->
+        <template if:true={hasErrors}>
+            <div class="slds-m-top_medium">
+                <h2 class="slds-text-heading_small">Validation Errors</h2>
+                <lightning-datatable key-field="id"
+                                     data={errorRows}
+                                     columns={columns}
+                                     hide-checkbox-column>
+                </lightning-datatable>
+            </div>
+        </template>
+    </div>
+</template>
